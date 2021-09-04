@@ -1,7 +1,7 @@
-all: client server
+all: oc os
 
-client: client.cpp
-	g++ -std=c++17 -lsoundio -lpthread client.cpp -o client
+oc: opus_client.cpp opus_client.h
+	g++ -std=c++17 opus_client.cpp -o oc -lsoundio -lpthread -lm -lopus -g
 
-server: server.cpp
-	g++ -std=c++17 -lsoundio -lpthread server.cpp -o server
+os: opus_server.cpp
+	g++ -std=c++17 opus_server.cpp -o os -lsoundio -lpthread -lm -lopus -g

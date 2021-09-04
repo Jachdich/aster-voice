@@ -8,6 +8,7 @@ using udp = asio::ip::udp;
 
 uint16_t buf_begin = 0;
 uint16_t buf_end = 0;
+uint16_t buf_avail = 0;
 float *buffer;
 
 void wr_cal(int num_samples, int num_areas, Area* areas) {
