@@ -102,13 +102,13 @@ private:
                 }
             } else if (req == REQ_END) {
                 if (conn->uuid != 0) {
-                    uint8_t ack_msg[1] = {REQ_ACK};
-                    socket_.send_to(asio::buffer(ack_msg, 1), conn->endpt);
                     delete conn;
                     conns.erase(std::next(conns.begin(), idx));
                 } else {
                     printf("END req without identifying first\n");
                 }
+                uint8_t ack_msg[1] = {REQ_ACK};
+                socket_.send_to(asio::buffer(ack_msg, 1), remote_endpoint_);
             } else if (req == REQ_ADATA) {
                 if (conn->uuid != 0) {
                     conn->iters_without_msg = 0;
@@ -183,13 +183,13 @@ void TcpClient::readUntil() {
 }
 
 void start_server() {
-    try {
+    //try {
         asio::io_context ctx;
         UdpServer server(ctx);
         ctx.run();
-    } catch (std::exception &e) {
-        fprintf(stderr, "server error: %s\n", e.what());
-    }
+    //} catch (std::exception &e) {
+    //    fprintf(stderr, "server error: %s\n", e.what());
+    //}
 }
 
 int main() {
