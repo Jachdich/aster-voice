@@ -112,7 +112,11 @@ private:
             } else if (req == REQ_ADATA) {
                 if (conn->uuid != 0) {
                     conn->iters_without_msg = 0;
-                    sendall(asio::buffer(cbytes + 1, nBytes - 1), conn);
+                    uint8_t senddata[MAX_PACKET_SIZE + 9];
+                    senddata[0] = REQ_ADATA;
+                    memcpy(senddata + 1, &conn->uuid, 8);
+                    memcpy(senddata + 9, cbytes + 1, nBytes - 1);
+                    sendall(asio::buffer(senddata, nBytes + 8), conn);
                 } else {
                     printf("ADATA req without identifying first\n");
                 }
